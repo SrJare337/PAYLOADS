@@ -1,4 +1,22 @@
-## Payloads de XSS
+\     /  
+ \   /
+  \ /
+  /\
+ /  \
+/    \
+ ____
+/     
+\____ 
+     \
+\____/
+
+ ____
+/     
+\____ 
+     \
+\____/
+
+
 <script>alert('XSS')</script>
 
 <img src="x" onerror="alert('XSS')">
